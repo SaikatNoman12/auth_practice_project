@@ -1,20 +1,23 @@
-<div class="add-new-employee" *ngIf="displayHide" (click)="onShowBack()">
+<div class="add-new-employee" *ngIf="displayHide" (click)="onShow()">
   <div class="p-3 form-content-w" (click)="$event.stopPropagation()">
+    <!-- top title start -->
     <div class="form-title d-flex -align-items-center justify-content-between">
       <div class="title">
         <h5 class="m-0">{{ "Add Employee" | uppercase }}</h5>
       </div>
       <div class="close-btn">
-        <button type="button" class="close" (click)="onShowBack()">
+        <button type="button" class="close" (click)="onShow()">
           <i class="far fa-times-circle"></i>
         </button>
       </div>
     </div>
+    <!-- top title end -->
 
     <hr />
 
+    <!-- form start -->
     <div class="w-100">
-      <form>
+      <form [formGroup]="myRecForm" (ngSubmit)="onRecFormSubmit()">
         <div class="form-item mb-3">
           <label class="h6" for="name">Name:- </label>
           <input
@@ -22,7 +25,14 @@
             class="form-control"
             type="text"
             id="name"
+            formControlName="name"
           />
+          <small
+            *ngIf="!formControl?.['name']?.valid && formControl?.['name']?.touched"
+            class="text-danger"
+          >
+            Please enter your name!
+          </small>
         </div>
         <div class="form-item mb-3">
           <label class="h6" for="designation">Designation:- </label>
@@ -31,12 +41,23 @@
             class="form-control"
             type="text"
             id="designation"
+            formControlName="designation"
           />
+          <small
+            *ngIf="!formControl?.['designation']?.valid && formControl?.['designation']?.touched"
+            class="text-danger"
+          >
+            Please enter your designation!
+          </small>
         </div>
 
         <div class="form-item mb-3">
           <label class="h6" for="department">Chose Department:- </label>
-          <select class="form-control" id="department">
+          <select
+            class="form-control"
+            id="department"
+            formControlName="department"
+          >
             <option value="designer">Designer</option>
             <option value="developer">Developer</option>
             <option value="software engineer">Software Engineer</option>
@@ -44,8 +65,8 @@
         </div>
 
         <div class="form-item mb-3">
-          <label class="h6" for="department">Chose Status:- </label>
-          <select class="form-control" id="department">
+          <label class="h6" for="status">Chose Status:- </label>
+          <select class="form-control" id="status" formControlName="status">
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
@@ -54,17 +75,14 @@
         <div
           class="mt-3 d-flex align-items-center justify-content-center form-button"
         >
-          <button type="button" class="btn btn-danger px-4">Close</button>
-          &nbsp; &nbsp;
-          <button
-            type="submit"
-            class="btn btn-success px-4"
-            (click)="onShowBack()"
-          >
-            Submit
+          <button type="button" class="btn btn-danger px-4" (click)="onShow()">
+            Close
           </button>
+          &nbsp; &nbsp;
+          <button type="submit" class="btn btn-success px-4">Submit</button>
         </div>
       </form>
     </div>
+    <!-- form end -->
   </div>
 </div>
