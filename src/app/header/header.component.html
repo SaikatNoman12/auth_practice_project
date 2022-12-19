@@ -3,14 +3,64 @@
     <div class="logo">
       <h1 class="m-0">{{ "Logo" | titlecase }}</h1>
     </div>
-    <div class="signIn-profile">
-      <button class="myBtn dashboard" type="button" routerLink="/dashboard">
-        {{ "Dashboard" | titlecase }}
-      </button>
+    <div class="signIn-profile d-flex align-items-center">
+      <div class="sign-in-btn">
+        <button class="myBtn dashboard" type="button" routerLink="/dashboard">
+          {{ "Dashboard" | titlecase }}
+        </button>
 
-      <button class="myBtn sign-in" type="button">
-        {{ "Sign In" | titlecase }}
-      </button>
+        <button class="myBtn sign-in" type="button">
+          {{ "Sign In" | titlecase }}
+        </button>
+      </div>
+
+      <div class="profile ms-2">
+        <div class="prof-img">
+          <img src="../../assets/pngegg.png" alt="" />
+        </div>
+        <div class="profile-header-item">
+          <ul>
+            <li>
+              <a href="#">
+                <span>
+                  <i class="fas fa-border-all" aria-hidden="true"></i>
+                </span>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>
+                  <i class="fas fa-eye" aria-hidden="true"></i>
+                </span>
+                <span>View Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>
+                  <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                </span>
+                <span>Edit Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span><i class="fas fa-eye" aria-hidden="true"></i></span>
+                <span>Edit Password</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>
+                  <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                </span>
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
