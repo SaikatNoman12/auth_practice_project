@@ -1,0 +1,62 @@
+<div class="container pt-3">
+  <div
+    class="top-dashboard px-2 d-flex align-items-center justify-content-between"
+  >
+    <div>
+      <h3 class="m-0">Dashboard</h3>
+    </div>
+    <div>
+      <button class="btn btn-outline-success add_employee py-2" (click)="onShowBack()">
+        <span> + </span>
+        Add Employee
+      </button>
+      <div *ngIf="displayFalse" class="add-new-employee">
+        <app-add-employee></app-add-employee>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="user-btn px-2 py-4 bg-light rounded">
+    <div class="user">
+      <h4 class="m-0">Welcome, <span class="text-primary">User</span></h4>
+    </div>
+  </div>
+  <hr />
+  <div class="cards">
+    <div class="card-body">
+      <div class="card-image">
+        <img
+          src="https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg?s=612x612&w=0&k=20&c=CK49ShLJwDxE4kiroCR42kimTuuhvuo2FH5y_6aSgEo="
+          alt="image"
+        />
+      </div>
+
+      <div class="card-info">
+        <div class="content">
+          <h5><span>Name: </span> <span>Abdullah Al Nomaan</span></h5>
+          <h5><span>Designation: </span> <span>JavaScript, Angular</span></h5>
+          <h5><span>Department: </span> <span>software engineer</span></h5>
+          <h5 class="d-flex align-items-center">
+            <span>Status: </span>
+            <span *ngIf="'inactive' !== 'inactive'" class="acIn inactive ms-2"
+              >Inactive</span
+            >
+            <span *ngIf="'active' === 'active'" class="acIn active ms-2"
+              >Active</span
+            >
+          </h5>
+        </div>
+        <div class="info-btn mt-3 d-flex align-items-center">
+          <div class="view-employee">
+            <button type="button" class="btn btn-success">View Employee</button>
+          </div>
+          <div class="cross ms-3">
+            <button type="button" class="btn btn-danger px-3">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

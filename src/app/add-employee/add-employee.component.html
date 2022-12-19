@@ -1,0 +1,70 @@
+<div class="add-new-employee" *ngIf="displayHide" (click)="onShowBack()">
+  <div class="p-3 form-content-w" (click)="$event.stopPropagation()">
+    <div class="form-title d-flex -align-items-center justify-content-between">
+      <div class="title">
+        <h5 class="m-0">{{ "Add Employee" | uppercase }}</h5>
+      </div>
+      <div class="close-btn">
+        <button type="button" class="close" (click)="onShowBack()">
+          <i class="far fa-times-circle"></i>
+        </button>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="w-100">
+      <form>
+        <div class="form-item mb-3">
+          <label class="h6" for="name">Name:- </label>
+          <input
+            placeholder="Enter your name..."
+            class="form-control"
+            type="text"
+            id="name"
+          />
+        </div>
+        <div class="form-item mb-3">
+          <label class="h6" for="designation">Designation:- </label>
+          <input
+            placeholder="Enter your designation..."
+            class="form-control"
+            type="text"
+            id="designation"
+          />
+        </div>
+
+        <div class="form-item mb-3">
+          <label class="h6" for="department">Chose Department:- </label>
+          <select class="form-control" id="department">
+            <option value="designer">Designer</option>
+            <option value="developer">Developer</option>
+            <option value="software engineer">Software Engineer</option>
+          </select>
+        </div>
+
+        <div class="form-item mb-3">
+          <label class="h6" for="department">Chose Status:- </label>
+          <select class="form-control" id="department">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div
+          class="mt-3 d-flex align-items-center justify-content-center form-button"
+        >
+          <button type="button" class="btn btn-danger px-4">Close</button>
+          &nbsp; &nbsp;
+          <button
+            type="submit"
+            class="btn btn-success px-4"
+            (click)="onShowBack()"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
