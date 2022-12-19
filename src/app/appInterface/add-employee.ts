@@ -5,3 +5,9 @@ export interface AddEmployee {
     department: string;
     status: string;
 }
+
+
+export interface SetUserProfile {
+    name:string,
+    photoUrl:string
+}

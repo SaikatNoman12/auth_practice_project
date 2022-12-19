@@ -1,0 +1,45 @@
+.edit-btn {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.edit-btn span:first-child {
+  margin-right: 8px;
+}
+
+.edit-mode h5 {
+  font-size: 20px;
+  font-weight: 500;
+  color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.edit-mode h5 span:last-child {
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 6px;
+  color: #fff;
+  padding: 1px 9px 4px 9px;
+  margin-left: 8px;
+  letter-spacing: 1px;
+}
+
+.form-btn button {
+  font-weight: 500;
+}
+
+.bg-false {
+  background-color: green;
+}
+
+.bg-true {
+  background-color: crimson;
+}
+
+label {
+  font-size: 18px;
+  font-weight: 500;
+}

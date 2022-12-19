@@ -1,0 +1,120 @@
+<br />
+<br />
+
+<div class="p-3 w-50 mx-auto shadow rounded">
+  <div class="title-edit d-flex justify-content-between align-items-center">
+    <div class="title">
+      <h1 class="m-0">{{ "Profile" | uppercase }}</h1>
+    </div>
+    <div class="edit">
+      <button
+        type="button"
+        class="btn btn-success edit-btn px-3"
+        routerLink="/profile"
+        [queryParams]="{ EditMode: true }"
+      >
+        <span>
+          <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+        </span>
+        <span> Edit Profile </span>
+      </button>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="edit-mode">
+    <h5 class="m-0">
+      <span>Edit Mode: </span>
+      <span
+        [ngClass]="{
+          'bg-false': !editMode,
+          'bg-true': editMode
+        }"
+        >{{ editMode }}</span
+      >
+    </h5>
+  </div>
+
+  <hr />
+
+  <div class="w-100">
+    <form [formGroup]="myRecForm" (ngSubmit)="onRecFormSubmit()">
+      <div class="form-item mb-3">
+        <label class="h6 m-0" for="name">Edit Name:-</label>
+
+        <!-- form item -->
+        <ng-container *ngIf="editMode">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter name..."
+            formControlName="name"
+          />
+          <small
+            *ngIf="!fromControl?.['name']?.valid && fromControl?.['name']?.touched"
+            class="text-danger"
+          >
+            Please enter your name!
+          </small>
+        </ng-container>
+
+        <!-- text item -->
+        <ng-container *ngIf="!editMode">
+          <h5 class="text-primary ps-3">Abdullah Al Nomaan</h5>
+        </ng-container>
+      </div>
+
+      <div class="form-item mb-3">
+        <label class="h6 m-0" for="name"
+          >{{ editMode ? "Edit " : "" }} Photo Url:-</label
+        >
+        <!-- form item -->
+        <ng-container *ngIf="editMode">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter your photo url!"
+            formControlName="photoUrl"
+          />
+          <small
+            *ngIf="!fromControl?.['photoUrl']?.valid && fromControl?.['photoUrl']?.touched"
+            class="text-danger"
+          >
+            Please enter your photo url!
+          </small>
+        </ng-container>
+
+        <!-- text item -->
+        <ng-container *ngIf="!editMode">
+          <h5 class="text-primary ps-3">Your photo url http://</h5>
+        </ng-container>
+      </div>
+
+      <ng-container *ngIf="editMode">
+        <div class="form-btn d-flex align-items-center justify-content-between">
+          <div class="left-btn">
+            <button type="submit" class="btn btn-primary px-4">Submit</button>
+            &nbsp;&nbsp;
+            <button
+              type="button"
+              class="btn btn-outline-secondary px-4"
+              (click)="onDiscard()"
+            >
+              Discard
+            </button>
+          </div>
+          <div class="reset-btn">
+            <button
+              [disabled]="!myRecForm.valid"
+              type="button"
+              class="btn btn-outline-danger px-4"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+</div>
