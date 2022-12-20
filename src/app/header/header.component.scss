@@ -68,6 +68,7 @@
   list-style: none;
   padding: 0px;
   margin-bottom: 0px;
+  overflow: hidden;
 }
 
 .profile-header-item ul li a {
@@ -85,6 +86,15 @@
 }
 
 .profile-header-item ul li a:hover {
+  background-color: rgba(184, 182, 182, 0.186);
+}
+
+.active {
+  background-color: rgba(184, 182, 182, 0.315);
+  box-shadow: 0px 0px 10px red;
+}
+
+.profile-header-item ul li a.active:hover {
   background-color: rgba(184, 182, 182, 0.315);
 }
 
