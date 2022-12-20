@@ -1,0 +1,96 @@
+.title h1 {
+  font-size: 60px;
+  letter-spacing: 1px;
+}
+
+.title-info h6 {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.form-google-facebook {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(2, 1fr);
+  height: 300px;
+  align-items: center;
+}
+
+.or {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  border-left: 1px dashed gray;
+}
+
+.or span {
+  position: relative;
+  top: 49%;
+  left: -54%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  color: rgba(51, 51, 51, 0.757);
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group-prepend span {
+  height: 100%;
+  border-radius: 6px 0px 0px 6px;
+  color: gray;
+}
+
+.text-in small {
+  font-size: 16px;
+}
+
+.text-in small a {
+  font-weight: 500;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+.text-in small a:hover {
+  color: rgba(0, 0, 255, 0.617);
+}
+
+.google-sign-in-btn button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google-sign-in-btn span {
+  margin-right: 10px;
+}
+
+.google-sign-in-btn button {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  outline: 0px;
+}
+
+.google-sign-in-btn button:hover {
+  background-color: rgba(128, 128, 128, 0.29);
+}
+
+.google-sign-in-btn button:first-child span i {
+  color: orange;
+}
+
+.google-sign-in-btn button:last-child span i {
+  color: blue;
+}
