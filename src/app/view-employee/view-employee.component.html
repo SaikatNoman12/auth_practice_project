@@ -14,20 +14,32 @@
 
     <div class="card-info">
       <div class="content">
-        <h5><span>Name: </span> <span>Abdullah Al Nomaan</span></h5>
-        <h5><span>Designation: </span> <span>JavaScript, Angular</span></h5>
-        <h5><span>Department: </span> <span>software engineer</span></h5>
+        <h5>
+          <span>Name: </span> <span>{{ getDbUser?.name }}</span>
+        </h5>
+        <h5>
+          <span>Designation: </span> <span>{{ getDbUser?.designation }}</span>
+        </h5>
+        <h5>
+          <span>Department: </span> <span>{{ getDbUser?.department }}</span>
+        </h5>
         <h5 class="d-flex align-items-center">
           <span>Status: </span>
-          <span *ngIf="'inactive' !== 'inactive'" class="acIn inactive ms-2"
-            >Inactive</span
+          <span
+            *ngIf="getDbUser?.status === 'inactive'"
+            class="acIn inactive ms-2"
+            >{{ getDbUser?.status }}</span
           >
-          <span *ngIf="'active' === 'active'" class="acIn active ms-2">Active</span>
+          <span
+            *ngIf="getDbUser?.status === 'active'"
+            class="acIn active ms-2"
+            >{{ getDbUser?.status }}</span
+          >
         </h5>
       </div>
       <div class="info-btn mt-3 d-flex align-items-center">
         <div class="view-employee">
-          <button type="button" class="btn btn-success">
+          <button routerLink="/dashboard" type="button" class="btn btn-success">
             {{ "Back To Dashboard" | titlecase }}
           </button>
         </div>

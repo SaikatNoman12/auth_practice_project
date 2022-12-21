@@ -1,3 +1,4 @@
+import { ActivatedRoute, Params } from '@angular/router';
 import { AddEmployee } from './../appInterface/add-employee';
 import { SmallService } from './../appService/small.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,9 +15,12 @@ export class DashboardComponent implements OnInit {
 
   dataBaseData: any | AddEmployee;
 
+  showSpinner: boolean = false;
+
   constructor(
     private _smallService: SmallService,
-    private _databaseData: DatabaseService
+    private _databaseData: DatabaseService,
+    private _activatedRoute: ActivatedRoute
   ) {
 
     this._smallService.displayHide.subscribe(
@@ -40,15 +44,34 @@ export class DashboardComponent implements OnInit {
   }
 
   onGetDataBaseData() {
+    this.showSpinner = true;
     this._databaseData.getDataInDB().subscribe(
       (res: any) => {
-        this.dataBaseData = res;
-        console.log(this.dataBaseData);
+        if (res !== null) {
+          this.dataBaseData = res;
+          this.showSpinner = false;
+        }
       },
       (err: any) => {
         console.log(err);
       }
-    )
+    );
   }
+
+
+  // delete database data:-
+  deleteDbData(userId: string) {
+    this._databaseData.deleteDataBaseData(userId).subscribe(
+      (res: any) => {
+        if (res === null) {
+          this.onGetDataBaseData();
+        }
+      },
+      (err: any) => {
+
+      }
+    );
+  }
+
 
 }

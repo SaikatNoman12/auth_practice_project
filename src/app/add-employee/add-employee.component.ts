@@ -58,6 +58,7 @@ export class AddEmployeeComponent implements OnInit {
         .subscribe(
           (res: any) => {
             this._dashBoardComponent.onGetDataBaseData();
+            this.onShow();
           },
           (err: any) => {
             console.log(err);

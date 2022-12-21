@@ -9,7 +9,7 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'id:userId',
+    path: ':userId',
     loadChildren: () => import('../view-employee/view-employee.module').then(m => m.ViewEmployeeModule),
   }
 ];

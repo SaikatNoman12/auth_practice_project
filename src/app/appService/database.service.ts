@@ -10,6 +10,7 @@ import { map } from 'rxjs';
 export class DatabaseService {
 
   databaseUrl: string = `${config.API}/users.json`;
+  singleDBUrl: string = `${config.API}/users`;
 
   constructor(
     private http: HttpClient
@@ -38,7 +39,17 @@ export class DatabaseService {
           return dataArr;
         }
       )
-    )
+    );
+  }
+
+  // use for get single data:-
+  getSingleData(userId: string) {
+    return this.http.get(`${this.singleDBUrl}/${userId}.json`);
+  }
+
+  // use for delete db data:-
+  deleteDataBaseData(userId: string) {
+    return this.http.delete(`${this.singleDBUrl}/${userId}.json`);
   }
 
 }
