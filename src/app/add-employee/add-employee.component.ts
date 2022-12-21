@@ -1,7 +1,9 @@
+import { DashboardComponent } from './../dashboard/dashboard.component';
 import { SmallService } from './../appService/small.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddEmployee } from '../appInterface/add-employee';
+import { DatabaseService } from '../appService/database.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -19,6 +21,8 @@ export class AddEmployeeComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _smallService: SmallService,
+    private _databaseService: DatabaseService,
+    private _dashBoardComponent: DashboardComponent
   ) {
 
     this._smallService.displayHide.subscribe(
@@ -37,6 +41,7 @@ export class AddEmployeeComponent implements OnInit {
       'status': ['active', [Validators.required]],
     });
 
+
   }
 
   // get form control use for error handling:-
@@ -49,7 +54,15 @@ export class AddEmployeeComponent implements OnInit {
 
     if (this.myRecForm.valid) {
       const userData: AddEmployee = this.myRecForm.value;
-      console.log(userData);
+      this._databaseService.postDataInDB(userData)
+        .subscribe(
+          (res: any) => {
+            this._dashBoardComponent.onGetDataBaseData();
+          },
+          (err: any) => {
+            console.log(err);
+          }
+        );
     }
     else {
       let key = Object.keys(this.formControl);
@@ -68,6 +81,10 @@ export class AddEmployeeComponent implements OnInit {
   // on popup hide:-
   onShow() {
     this.displayHide = !this.displayHide;
+    // document.body.style.overflow = this.displayHide ? 'hidden' : 'auto';
+    // document.body.style.paddingRight = this.displayHide ? '17px' : '0px';
+    this._smallService.onScrollBarHiddenShowPopup(this.displayHide);
+
     this._smallService.displayHide.next(this.displayHide);
   }
 

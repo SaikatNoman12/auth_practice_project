@@ -2,6 +2,7 @@ import { SmallService } from './../../appService/small.service';
 import { HeaderModule } from './../../header/header.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DatabaseService } from 'src/app/appService/database.service';
 
 
 
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
     HeaderModule
   ],
   providers: [
-    SmallService
+    SmallService,
+    DatabaseService
   ]
 })
 export class SharedModule { }

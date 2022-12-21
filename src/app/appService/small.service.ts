@@ -11,4 +11,11 @@ export class SmallService {
 
   constructor() { }
 
+
+  // popup show then hide body scrollbar and popup hide then show body scrollbar:--
+  onScrollBarHiddenShowPopup(displayHide: any) {
+    document.body.style.overflow = displayHide ? 'hidden' : 'auto';
+    document.body.style.paddingRight = displayHide ? '17px' : '0px';
+  }
+
 }

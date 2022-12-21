@@ -62,3 +62,17 @@
 .card-info .content h5:last-child .inactive {
   background-color: orange;
 }
+
+.emm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  z-index: 10050;
+  width: 101%;
+  background-color: rgba(102, 51, 153, 0.084);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
