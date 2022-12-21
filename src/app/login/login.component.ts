@@ -1,5 +1,9 @@
+import { Router } from '@angular/router';
+import { AuthenticationService } from './../appService/authService/authentication.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { SignUpResponse } from '../appInterface/authInterface/sign-up-responce';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +17,9 @@ export class LoginComponent implements OnInit {
   modalSwitch: boolean = true;
 
   constructor(
-    private fBuilder: FormBuilder
+    private router: Router,
+    private fBuilder: FormBuilder,
+    private _authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
@@ -34,15 +40,33 @@ export class LoginComponent implements OnInit {
   }
 
   onMyFormSubmit() {
+    let recFormValue: {
+      email: string;
+      password: string;
+    } = this.myRecFrom.value;
+
+    let authObservable: Observable<SignUpResponse>;
+
     if (this.myRecFrom.valid) {
       if (this.modalSwitch) {
-        console.log('sign in');
-        console.log(this.myRecFrom.value);
+        // use for signIn:-------
+        authObservable = this._authService.onSignIn(recFormValue.email, recFormValue.password);
       }
       else {
-        console.log('create account');
-        console.log(this.myRecFrom.value);
+        // use for signUp:--------
+        authObservable = this._authService.onSignUp(recFormValue.email, recFormValue.password);
       }
+
+      // sign in and sign up:-------
+      authObservable.subscribe(
+        (res: any) => {
+          console.log(res);
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
+
     }
     else {
       let key = Object.keys(this.formControl);
