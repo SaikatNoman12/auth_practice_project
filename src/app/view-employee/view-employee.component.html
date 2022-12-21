@@ -3,47 +3,60 @@
     <h1>{{ "Employee Detail" | uppercase }}</h1>
   </div>
   <hr />
-
-  <div class="card-body pb-4">
-    <div class="card-image">
-      <img
-        src="https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg?s=612x612&w=0&k=20&c=CK49ShLJwDxE4kiroCR42kimTuuhvuo2FH5y_6aSgEo="
-        alt="image"
-      />
-    </div>
-
-    <div class="card-info">
-      <div class="content">
-        <h5>
-          <span>Name: </span> <span>{{ getDbUser?.name }}</span>
-        </h5>
-        <h5>
-          <span>Designation: </span> <span>{{ getDbUser?.designation }}</span>
-        </h5>
-        <h5>
-          <span>Department: </span> <span>{{ getDbUser?.department }}</span>
-        </h5>
-        <h5 class="d-flex align-items-center">
-          <span>Status: </span>
-          <span
-            *ngIf="getDbUser?.status === 'inactive'"
-            class="acIn inactive ms-2"
-            >{{ getDbUser?.status }}</span
-          >
-          <span
-            *ngIf="getDbUser?.status === 'active'"
-            class="acIn active ms-2"
-            >{{ getDbUser?.status }}</span
-          >
-        </h5>
+  <ng-container *ngIf="!showSpinner">
+    <div class="card-body pb-4">
+      <div class="card-image">
+        <img
+          src="https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg?s=612x612&w=0&k=20&c=CK49ShLJwDxE4kiroCR42kimTuuhvuo2FH5y_6aSgEo="
+          alt="image"
+        />
       </div>
-      <div class="info-btn mt-3 d-flex align-items-center">
-        <div class="view-employee">
-          <button routerLink="/dashboard" type="button" class="btn btn-success">
-            {{ "Back To Dashboard" | titlecase }}
-          </button>
+
+      <div class="card-info">
+        <div class="content">
+          <h5>
+            <span>Name: </span> <span>{{ getDbUser?.name }}</span>
+          </h5>
+          <h5>
+            <span>Designation: </span> <span>{{ getDbUser?.designation }}</span>
+          </h5>
+          <h5>
+            <span>Department: </span> <span>{{ getDbUser?.department }}</span>
+          </h5>
+          <h5 class="d-flex align-items-center">
+            <span>Status: </span>
+            <span
+              *ngIf="getDbUser?.status === 'inactive'"
+              class="acIn inactive ms-2"
+              >{{ getDbUser?.status }}</span
+            >
+            <span
+              *ngIf="getDbUser?.status === 'active'"
+              class="acIn active ms-2"
+              >{{ getDbUser?.status }}</span
+            >
+          </h5>
+        </div>
+        <div class="info-btn mt-3 d-flex align-items-center">
+          <div class="view-employee">
+            <button
+              routerLink="/dashboard"
+              type="button"
+              class="btn btn-success"
+            >
+              {{ "Back To Dashboard" | titlecase }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="showSpinner">
+    <div class="d-flex justify-content-start ps-5 pt-3">
+      <div class="spinner-border text-warning mt-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-container>
 </div>

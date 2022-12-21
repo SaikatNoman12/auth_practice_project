@@ -10,14 +10,16 @@ import { AddEmployee } from '../appInterface/add-employee';
 })
 export class ViewEmployeeComponent implements OnInit {
 
+  getId: any;
+  getUserId: any;
+  getDbUser: any | AddEmployee;
+
+  showSpinner: boolean = true;
+
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _databaseService: DatabaseService
   ) { }
-
-  getId: any;
-  getUserId: any;
-  getDbUser: any | AddEmployee;
 
   ngOnInit(): void {
 
@@ -28,6 +30,7 @@ export class ViewEmployeeComponent implements OnInit {
           (res: any) => {
             if (res !== null) {
               this.getDbUser = res;
+              this.showSpinner = false;
             }
           },
           (err: any) => {
@@ -35,8 +38,7 @@ export class ViewEmployeeComponent implements OnInit {
           }
         );
       }
-    )
-
+    );
 
   }
 
