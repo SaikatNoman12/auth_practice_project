@@ -66,6 +66,7 @@ export class AuthenticationService {
       );
   }
 
+  // use for auto sign:----
   autoSignIn() {
     const userData = localStorage.getItem('userData');
     const parseData = JSON.parse(userData as any);
@@ -83,8 +84,12 @@ export class AuthenticationService {
       this.user.next(loggedInUser);
       console.log(locationData);
       this.router.navigate([locationData === '' ? 'dashboard' : locationData]);
-    }
 
+      // auto signOut:----
+      const exDue = new Date(parseData._tokenExpirationDate).getTime() - new Date().getTime();
+      this.autoSignOut(exDue);
+    }
+    
   }
 
   // authentication:----
@@ -93,8 +98,32 @@ export class AuthenticationService {
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
 
+    this.autoSignOut(expireIn * 1000);
+
     localStorage.setItem("userData", JSON.stringify(user));
   }
+
+  exTimer: any;
+
+  // use for sign out:----
+  signOut() {
+    this.user.next(null);
+    this.router.navigate(['']);
+    localStorage.removeItem('userData');   
+
+    if (this.exTimer) {
+      clearTimeout(this.exTimer);
+    }
+    this.exTimer = null;
+  }
+
+  // use for auto signOut:----
+  autoSignOut(expirationDuration: number) {
+    this.exTimer = setTimeout(() => {
+      this.signOut();
+    }, expirationDuration);
+  }
+
 
 
 

@@ -70,6 +70,8 @@
                   routerLink="/"
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: true }"
+
+                  (click)="onSignOut()"
                 >
                   <span>
                     <i class="fas fa-sign-out-alt" aria-hidden="true"></i>

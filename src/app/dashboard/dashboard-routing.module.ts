@@ -1,3 +1,4 @@
+import { AuthGuard } from './../appGurd/auth.guard';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardModule } from './dashboard.module';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: ':userId',
+    canActivate: [AuthGuard],
     loadChildren: () => import('../view-employee/view-employee.module').then(m => m.ViewEmployeeModule),
   }
 ];

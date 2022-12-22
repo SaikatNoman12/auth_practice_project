@@ -20,8 +20,13 @@ export class HeaderComponent implements OnInit {
       (res: any) => {
         this.isLoggedIn = !!res;
       }
-    )
+    );
 
+  }
+
+
+  onSignOut() {
+    this._authService.signOut();
   }
 
 }

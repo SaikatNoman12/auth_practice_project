@@ -1,4 +1,4 @@
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AddEmployee } from './../appInterface/add-employee';
 import { SmallService } from './../appService/small.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   showSpinner: boolean = false;
 
   constructor(
+    private router: Router,
     private _smallService: SmallService,
     private _databaseData: DatabaseService,
     private _activatedRoute: ActivatedRoute
@@ -45,6 +46,9 @@ export class DashboardComponent implements OnInit {
 
   onGetDataBaseData() {
     this.showSpinner = true;
+
+    // const userData = JSON.parse(localStorage.getItem('userData') as any);
+    // if (userData) {
     this._databaseData.getDataInDB().subscribe(
       (res: any) => {
         if (res !== null) {
@@ -52,10 +56,13 @@ export class DashboardComponent implements OnInit {
           this.showSpinner = false;
         }
       },
-      (err: any) => {
-        console.log(err);
-      }
+      (err: any) => { }
     );
+    // }
+    // else {
+    //   this.router.navigate(['']);
+    // }
+
   }
 
 
