@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../appService/authService/authentication.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AddEmployee } from './../appInterface/add-employee';
 import { SmallService } from './../appService/small.service';
@@ -17,11 +18,12 @@ export class DashboardComponent implements OnInit {
 
   showSpinner: boolean = false;
 
+  profileInfo: any;
+
   constructor(
-    private router: Router,
     private _smallService: SmallService,
     private _databaseData: DatabaseService,
-    private _activatedRoute: ActivatedRoute
+    private _authService: AuthenticationService
   ) {
 
     this._smallService.displayHide.subscribe(
@@ -29,6 +31,12 @@ export class DashboardComponent implements OnInit {
         this.displayFalse = res;
       }
     );
+
+    this._authService.profileInfo.subscribe(
+      (res: any) => {
+        this.profileInfo = res.displayName;
+      }
+    )
 
   }
 
@@ -80,5 +88,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+
+  
 
 }

@@ -47,6 +47,7 @@
                   routerLink="/profile"
                   [queryParams]="{ EditMode: true }"
                   routerLinkActive="active"
+                  (click)="onEditFrom()"
                 >
                   <span>
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
@@ -70,7 +71,6 @@
                   routerLink="/"
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: true }"
-
                   (click)="onSignOut()"
                 >
                   <span>

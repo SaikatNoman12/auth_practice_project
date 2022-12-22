@@ -21,7 +21,12 @@
   <hr />
   <div class="user-btn px-2 py-4 bg-light rounded">
     <div class="user">
-      <h4 class="m-0">Welcome, <span class="text-primary">User</span></h4>
+      <h4 class="m-0">
+        Welcome,
+        <span class="text-primary">{{
+          profileInfo ? profileInfo : "User"
+        }}</span>
+      </h4>
     </div>
   </div>
   <hr />
@@ -40,13 +45,14 @@
             <div class="card-info">
               <div class="content">
                 <h5>
-                  <span>Name: </span> <span>{{ data.name }}</span>
+                  <span>Name: </span> <span>{{ data?.name }}</span>
                 </h5>
                 <h5>
-                  <span>Designation: </span> <span>{{ data.designation }}</span>
+                  <span>Designation: </span>
+                  <span>{{ data?.designation }}</span>
                 </h5>
                 <h5>
-                  <span>Department: </span> <span>{{ data.department }}</span>
+                  <span>Department: </span> <span>{{ data?.department }}</span>
                 </h5>
                 <h5 class="d-flex align-items-center">
                   <span>Status: </span>
@@ -54,13 +60,13 @@
                     *ngIf="data.status === 'inactive'"
                     class="acIn inactive ms-2"
                   >
-                    {{ data.status }}
+                    {{ data?.status }}
                   </span>
                   <span
-                    *ngIf="data.status === 'active'"
+                    *ngIf="data?.status === 'active'"
                     class="acIn active ms-2"
                   >
-                    {{ data.status }}
+                    {{ data?.status }}
                   </span>
                 </h5>
               </div>
@@ -69,14 +75,14 @@
                   <button
                     type="button"
                     class="btn btn-success"
-                    [routerLink]="'id' + data.userId"
+                    [routerLink]="'id' + data?.userId"
                   >
                     View Employee
                   </button>
                 </div>
                 <div class="cross ms-3">
                   <button
-                    (click)="deleteDbData(data.userId)"
+                    (click)="deleteDbData(data?.userId)"
                     type="button"
                     class="btn btn-danger px-3"
                   >

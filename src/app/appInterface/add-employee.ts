@@ -8,6 +8,7 @@ export interface AddEmployee {
 
 
 export interface SetUserProfile {
-    name:string,
-    photoUrl:string
+    userToken?: string;
+    name: string;
+    photoUrl: string;
 }

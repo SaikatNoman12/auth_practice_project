@@ -12,6 +12,7 @@
         class="btn btn-success edit-btn px-3"
         routerLink="/profile"
         [queryParams]="{ EditMode: true }"
+        (click)="onEditProfile()"
       >
         <span>
           <i class="fas fa-pencil-alt" aria-hidden="true"></i>
@@ -38,7 +39,15 @@
 
   <hr />
 
-  <div class="w-100">
+  <div
+    class="w-100"
+    *ngIf="
+      !onShowSpinner &&
+      (profileInfo?.displayName === '' && profileInfo?.photoUrl === ''
+        ? profileInfo?.displayName && profileInfo?.photoUrl
+        : true)
+    "
+  >
     <form [formGroup]="myRecForm" (ngSubmit)="onRecFormSubmit()">
       <div class="form-item mb-3">
         <label class="h6 m-0" for="name">Edit Name:-</label>
@@ -61,7 +70,13 @@
 
         <!-- text item -->
         <ng-container *ngIf="!editMode">
-          <h5 class="text-primary ps-3">Abdullah Al Nomaan</h5>
+          <h5 class="text-primary ps-3">
+            {{
+              profileInfo?.displayName
+                ? profileInfo?.displayName
+                : "Please add your name!"
+            }}
+          </h5>
         </ng-container>
       </div>
 
@@ -87,7 +102,30 @@
 
         <!-- text item -->
         <ng-container *ngIf="!editMode">
-          <h5 class="text-primary ps-3">Your photo url http://</h5>
+          <h5
+            *ngIf="!profileInfo?.photoUrl"
+            class="text-primary ps-3 text-break"
+          >
+            Please add your profile photo!
+          </h5>
+          <br />
+          <a
+            class="h5 ps-3 text-primary text-break"
+
+            *ngIf="profileInfo?.photoUrl"
+            href="{{ profileInfo?.photoUrl }}"
+            target="_blank"
+          >
+            {{ profileInfo?.photoUrl }}
+          </a>
+          <img
+            class="d-block mt-3 rounded"
+            width="300"
+            *ngIf="profileInfo?.photoUrl"
+            src="{{ profileInfo?.photoUrl }}"
+            alt=""
+            (error)="handleMissingImage($event)"
+          />
         </ng-container>
       </div>
 
@@ -109,6 +147,7 @@
               [disabled]="!myRecForm.valid"
               type="button"
               class="btn btn-outline-danger px-4"
+              (click)="onResetValue()"
             >
               Reset
             </button>
@@ -117,4 +156,22 @@
       </ng-container>
     </form>
   </div>
+
+  <div
+    *ngIf="
+      onShowSpinner ||
+      (profileInfo?.displayName === '' && profileInfo?.photoUrl === ''
+        ? !(profileInfo?.displayName && profileInfo?.photoUrl)
+        : false)
+    "
+    class="d-flex mt-3 justify-content-center"
+  >
+    <div class="spinner-grow text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 </div>
+
+<br />
+<br />
+<br />

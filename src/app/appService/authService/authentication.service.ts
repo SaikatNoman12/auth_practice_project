@@ -1,9 +1,10 @@
+import { SetUserProfile } from './../../appInterface/add-employee';
 import { Router } from '@angular/router';
 import { SignUpResponse } from './../../appInterface/authInterface/sign-up-responce';
 import { config } from './../../appConfig/config';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Subject, tap, BehaviorSubject } from 'rxjs';
+import { catchError, Subject, tap, BehaviorSubject, pipe } from 'rxjs';
 import { ErrorHandlingService } from './error-handling.service';
 import { User } from 'src/app/appModal/user.modal';
 import { AddEmployee } from 'src/app/appInterface/add-employee';
@@ -88,8 +89,10 @@ export class AuthenticationService {
       // auto signOut:----
       const exDue = new Date(parseData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoSignOut(exDue);
+
+      this.getProfileData(loggedInUser.token);
     }
-    
+
   }
 
   // authentication:----
@@ -101,6 +104,8 @@ export class AuthenticationService {
     this.autoSignOut(expireIn * 1000);
 
     localStorage.setItem("userData", JSON.stringify(user));
+
+    this.getProfileData(token);
   }
 
   exTimer: any;
@@ -109,7 +114,7 @@ export class AuthenticationService {
   signOut() {
     this.user.next(null);
     this.router.navigate(['']);
-    localStorage.removeItem('userData');   
+    localStorage.removeItem('userData');
 
     if (this.exTimer) {
       clearTimeout(this.exTimer);
@@ -122,6 +127,45 @@ export class AuthenticationService {
     this.exTimer = setTimeout(() => {
       this.signOut();
     }, expirationDuration);
+  }
+
+
+  // update profileData:----
+  updateProfile(data: SetUserProfile) {
+    return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${config.API_KEY}`, {
+      idToken: data.userToken,
+      displayName: data.name,
+      photoUrl: data.photoUrl,
+      returnSecureToken: true
+    }).pipe(
+      catchError(
+        (err: any) => {
+          return this._errorService.handleError(err);
+        }
+      ),
+
+    );
+  }
+
+  profileInfo: any = new BehaviorSubject({
+    displayName: '',
+    email: '',
+    photoUrl: ''
+  });
+
+  // get profileData:----
+  getProfileData(token: string) {
+    return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${config.API_KEY}`, {
+      idToken: token
+    }).subscribe(
+      (response: any) => {
+        this.profileInfo.next({
+          displayName: response?.users[0]?.displayName ? response?.users[0]?.displayName : '',
+          email: response?.users[0]?.email ? response?.users[0]?.email : '',
+          photoUrl: response?.users[0]?.photoUrl ? response?.users[0]?.photoUrl : ''
+        });
+      }
+    );
   }
 
 
