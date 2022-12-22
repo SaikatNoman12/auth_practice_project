@@ -14,7 +14,7 @@ import { HeaderComponent } from './header.component';
     HeaderRoutingModule
   ],
   exports:[
-    HeaderComponent
+    HeaderComponent,
   ]
 })
 export class HeaderModule { }

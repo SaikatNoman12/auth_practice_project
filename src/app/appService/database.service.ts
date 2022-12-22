@@ -1,8 +1,11 @@
+import { AuthenticationService } from './authService/authentication.service';
 import { AddEmployee } from './../appInterface/add-employee';
 import { config } from './../appConfig/config';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { exhaustMap, map, take } from 'rxjs';
+import { SignUpResponse } from '../appInterface/authInterface/sign-up-responce';
+import { User } from '../appModal/user.modal';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,8 @@ export class DatabaseService {
   singleDBUrl: string = `${config.API}/users`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _authService: AuthenticationService
   ) { }
 
 
@@ -24,8 +28,16 @@ export class DatabaseService {
 
   // get data in database:-
   getDataInDB() {
-    return this.http.get<AddEmployee>(this.databaseUrl).pipe(
-      map(
+    return this._authService.user.pipe(
+      take(1),
+      exhaustMap(
+        (user: any) => {
+          return this.http.get<SignUpResponse>(this.databaseUrl, {
+            params: new HttpParams().set('auth', user.token)
+          });
+        }
+      )
+      , map(
         (response: any) => {
           let dataArr = [];
           for (const key in response) {
@@ -44,7 +56,19 @@ export class DatabaseService {
 
   // use for get single data:-
   getSingleData(userId: string) {
-    return this.http.get(`${this.singleDBUrl}/${userId}.json`);
+
+    return this._authService.user.pipe(
+      take(1),
+      exhaustMap(
+        (user: any) => {
+          return this.http.get(`${this.singleDBUrl}/${userId}.json`, {
+            params: new HttpParams().set('auth', user.token)
+          })
+        }
+      )
+    )
+
+    // return this.http.get(`${this.singleDBUrl}/${userId}.json`);
   }
 
   // use for delete db data:-

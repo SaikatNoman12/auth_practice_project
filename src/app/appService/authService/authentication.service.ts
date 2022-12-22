@@ -1,21 +1,26 @@
+import { SignUpResponse } from './../../appInterface/authInterface/sign-up-responce';
 import { config } from './../../appConfig/config';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs';
+import { catchError, Subject, tap, BehaviorSubject } from 'rxjs';
 import { ErrorHandlingService } from './error-handling.service';
+import { User } from 'src/app/appModal/user.modal';
+import { AddEmployee } from 'src/app/appInterface/add-employee';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
+  // user subject:---
+  user: any = new BehaviorSubject<any>(null);
+
   constructor(
     private http: HttpClient,
     private _errorService: ErrorHandlingService
   ) { }
 
-
-  // use for sign up:
+  // use for signUp:----
   onSignUp(email: string, pass: string) {
     return this.http.post<any>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${config.API_KEY}`,
@@ -23,17 +28,21 @@ export class AuthenticationService {
         email: email,
         password: pass,
         returnSecureToken: true
-      })
-      .pipe(
+      }).pipe(
         catchError(
           (err) => {
             return this._errorService.handleError(err);
+          }
+        ),
+        tap(
+          (res: SignUpResponse) => {
+            this.authenticationUser(res.email, res.localId, res.idToken, +res.expiresIn);
           }
         )
       );
   }
 
-
+  // use for signIn:----
   onSignIn(email: string, pass: string) {
     return this.http.post<any>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${config.API_KEY}`,
@@ -41,18 +50,26 @@ export class AuthenticationService {
         email: email,
         password: pass,
         returnSecureToken: true
-      })
-      .pipe(
+      }).pipe(
         catchError(
           (err) => {
             return this._errorService.handleError(err);
+          }
+        ),
+        tap(
+          (res: SignUpResponse) => {
+            this.authenticationUser(res.email, res.localId, res.idToken, +res.expiresIn);
           }
         )
       );
   }
 
-
-
+  // authentication:----
+  private authenticationUser(email: string, userId: string, token: string, expireIn: any) {
+    const expirationDate = new Date(new Date().getTime() + expireIn * 1000);
+    const user = new User(email, userId, token, expirationDate);
+    this.user.next(user);
+  }
 
 
 

@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fBuilder: FormBuilder,
     private _authService: AuthenticationService,
-    private _errorHandService: ErrorHandlingService,
   ) { }
 
   ngOnInit(): void {
@@ -62,7 +61,7 @@ export class LoginComponent implements OnInit {
       // sign in and sign up:-------
       authObservable.subscribe(
         (res: any) => {
-          console.log(res);
+          this.router.navigate(['dashboard']);
         },
         (err: any) => {
           this.errorTextShow = err;
