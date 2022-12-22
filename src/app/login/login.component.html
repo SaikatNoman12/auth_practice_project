@@ -1,5 +1,16 @@
 <br /><br />
 
+<ng-container *ngIf="errorTextShow">
+  <div class="container w-75 px-0 mb-4">
+    <div class="bg-danger bg-opacity-25 p-5 shadow rounded">
+      <h4 class="text-danger m-0">
+        <span class="">Error:</span>
+        <span class="h5 m-0 fw-lighter">{{ errorTextShow }}</span>
+      </h4>
+    </div>
+  </div>
+</ng-container>
+
 <div class="container shadow rounded w-75 mx-auto p-3">
   <div class="login-title text-center pt-4 mb-4">
     <div class="title">

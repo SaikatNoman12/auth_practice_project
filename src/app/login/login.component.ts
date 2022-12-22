@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SignUpResponse } from '../appInterface/authInterface/sign-up-responce';
+import { ErrorHandlingService } from '../appService/authService/error-handling.service';
 
 @Component({
   selector: 'app-login',
@@ -12,18 +13,20 @@ import { SignUpResponse } from '../appInterface/authInterface/sign-up-responce';
 })
 export class LoginComponent implements OnInit {
 
+  errorTextShow: unknown = null;
   myRecFrom!: FormGroup;
-
   modalSwitch: boolean = true;
 
   constructor(
     private router: Router,
     private fBuilder: FormBuilder,
     private _authService: AuthenticationService,
+    private _errorHandService: ErrorHandlingService,
   ) { }
 
   ngOnInit(): void {
 
+    // use my form:-
     this.myRecFrom = this.fBuilder.group({
       'email': [null, [Validators.required, Validators.email]],
       'password': [null, [Validators.required, Validators.minLength(6)]]
@@ -56,14 +59,13 @@ export class LoginComponent implements OnInit {
         // use for signUp:--------
         authObservable = this._authService.onSignUp(recFormValue.email, recFormValue.password);
       }
-
       // sign in and sign up:-------
       authObservable.subscribe(
         (res: any) => {
           console.log(res);
         },
         (err: any) => {
-          console.log(err);
+          this.errorTextShow = err;
         }
       );
 

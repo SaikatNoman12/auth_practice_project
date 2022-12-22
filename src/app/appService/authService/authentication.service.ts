@@ -1,6 +1,8 @@
 import { config } from './../../appConfig/config';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs';
+import { ErrorHandlingService } from './error-handling.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,8 @@ import { Injectable } from '@angular/core';
 export class AuthenticationService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _errorService: ErrorHandlingService
   ) { }
 
 
@@ -20,8 +23,14 @@ export class AuthenticationService {
         email: email,
         password: pass,
         returnSecureToken: true
-      }
-    );
+      })
+      .pipe(
+        catchError(
+          (err) => {
+            return this._errorService.handleError(err);
+          }
+        )
+      );
   }
 
 
@@ -32,8 +41,14 @@ export class AuthenticationService {
         email: email,
         password: pass,
         returnSecureToken: true
-      }
-    );
+      })
+      .pipe(
+        catchError(
+          (err) => {
+            return this._errorService.handleError(err);
+          }
+        )
+      );
   }
 
 
