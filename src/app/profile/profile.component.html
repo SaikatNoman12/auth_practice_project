@@ -42,10 +42,7 @@
   <div
     class="w-100"
     *ngIf="
-      !onShowSpinner &&
-      (profileInfo?.displayName === '' && profileInfo?.photoUrl === ''
-        ? profileInfo?.displayName && profileInfo?.photoUrl
-        : true)
+      !onShowSpinner
     "
   >
     <form [formGroup]="myRecForm" (ngSubmit)="onRecFormSubmit()">
@@ -120,7 +117,7 @@
           </a>
           <img
             class="d-block mt-3 rounded"
-            width="300"
+            width="200"
             *ngIf="profileInfo?.photoUrl"
             src="{{ profileInfo?.photoUrl }}"
             alt=""
@@ -159,11 +156,7 @@
 
   <div
     *ngIf="
-      onShowSpinner ||
-      (profileInfo?.displayName === '' && profileInfo?.photoUrl === ''
-        ? !(profileInfo?.displayName && profileInfo?.photoUrl)
-        : false)
-    "
+      onShowSpinner"
     class="d-flex mt-3 justify-content-center"
   >
     <div class="spinner-grow text-warning" role="status">

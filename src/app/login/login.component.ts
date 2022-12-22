@@ -1,8 +1,9 @@
+import { SmallService } from './../appService/small.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../appService/authService/authentication.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import { SignUpResponse } from '../appInterface/authInterface/sign-up-responce';
 import { ErrorHandlingService } from '../appService/authService/error-handling.service';
 
@@ -20,8 +21,11 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private fBuilder: FormBuilder,
+    private _smallService: SmallService,
     private _authService: AuthenticationService,
   ) { }
+
+  showPassChange: boolean = false;
 
   ngOnInit(): void {
 
@@ -30,6 +34,13 @@ export class LoginComponent implements OnInit {
       'email': [null, [Validators.required, Validators.email]],
       'password': [null, [Validators.required, Validators.minLength(6)]]
     });
+
+
+    this._smallService.passChange.subscribe(
+      (res: any) => {
+        this.showPassChange = res;
+      }
+    );
 
   }
 
@@ -62,11 +73,14 @@ export class LoginComponent implements OnInit {
       authObservable.subscribe(
         (res: any) => {
           this.router.navigate(['dashboard']);
+          this._smallService.passChange.next(false);
         },
         (err: any) => {
           this.errorTextShow = err;
+          this._smallService.passChange.next(false);
         }
       );
+
 
     }
     else {

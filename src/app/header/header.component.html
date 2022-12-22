@@ -16,7 +16,11 @@
       <ng-container *ngIf="isLoggedIn">
         <div class="profile ms-2">
           <div class="prof-img">
-            <img src="../../assets/pngegg.png" alt="" />
+            <img
+              src="{{ profileInfo ? profileInfo : '../../assets/pngegg.png' }}"
+              alt=""
+              style="object-fit: cover;"
+            />
           </div>
           <div class="profile-header-item">
             <ul>

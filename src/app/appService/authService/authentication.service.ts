@@ -108,9 +108,8 @@ export class AuthenticationService {
     this.getProfileData(token);
   }
 
-  exTimer: any;
-
   // use for sign out:----
+  exTimer: any;
   signOut() {
     this.user.next(null);
     this.router.navigate(['']);
@@ -129,7 +128,6 @@ export class AuthenticationService {
     }, expirationDuration);
   }
 
-
   // update profileData:----
   updateProfile(data: SetUserProfile) {
     return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${config.API_KEY}`, {
@@ -147,13 +145,12 @@ export class AuthenticationService {
     );
   }
 
+  // get profileData:----
   profileInfo: any = new BehaviorSubject({
     displayName: '',
     email: '',
     photoUrl: ''
   });
-
-  // get profileData:----
   getProfileData(token: string) {
     return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${config.API_KEY}`, {
       idToken: token
@@ -165,6 +162,22 @@ export class AuthenticationService {
           photoUrl: response?.users[0]?.photoUrl ? response?.users[0]?.photoUrl : ''
         });
       }
+    );
+  }
+
+
+  // use for change password:----
+  onChangePassword(data: any) {
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${config.API_KEY}`, {
+      idToken: data.idToken,
+      password: data.password,
+      returnSecureToken: true
+    }).pipe(
+      catchError(
+        (err: any) => {
+          return this._errorService.handleError(err);
+        }
+      )
     );
   }
 

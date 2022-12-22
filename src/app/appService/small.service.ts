@@ -9,8 +9,8 @@ export class SmallService implements OnInit {
 
   // add employee show and hide:--
   displayHide = new BehaviorSubject(false);
-
   proFileInfo: any;
+  passChange: any = new BehaviorSubject(false);
 
   constructor(
     private _authService: AuthenticationService

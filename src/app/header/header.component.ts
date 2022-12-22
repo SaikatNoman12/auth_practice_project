@@ -10,11 +10,19 @@ import { AuthenticationService } from '../appService/authService/authentication.
 export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean = false;
+  profileInfo: any;
 
   constructor(
     private _smallService: SmallService,
     private _authService: AuthenticationService
-  ) { }
+  ) {
+    _authService.profileInfo.subscribe(
+      (res: any) => {
+        this.profileInfo = res.photoUrl;
+        console.log(this.profileInfo);
+      }
+    )
+  }
 
   myRecForm: any;
 
