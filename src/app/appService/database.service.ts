@@ -28,47 +28,30 @@ export class DatabaseService {
 
   // get data in database:-
   getDataInDB() {
-    return this._authService.user.pipe(
-      take(1),
-      exhaustMap(
-        (user: any) => {
-          return this.http.get<SignUpResponse>(this.databaseUrl, {
-            params: new HttpParams().set('auth', user.token)
-          });
-        }
-      )
-      , map(
-        (response: any) => {
-          let dataArr = [];
-          for (const key in response) {
-            if (response.hasOwnProperty(key)) {
+    return this.http.get<AddEmployee>(
+      this.databaseUrl)
+      .pipe(
+        map(
+          (response: any) => {
+            const dataArr = [];
+
+            for (const key in response) {
               dataArr.push({
                 userId: key,
                 ...response[key]
               });
             }
+
+            return dataArr;
           }
-          return dataArr;
-        }
-      )
-    );
+        )
+      );
   }
 
   // use for get single data:-
   getSingleData(userId: string) {
 
-    return this._authService.user.pipe(
-      take(1),
-      exhaustMap(
-        (user: any) => {
-          return this.http.get(`${this.singleDBUrl}/${userId}.json`, {
-            params: new HttpParams().set('auth', user.token)
-          })
-        }
-      )
-    )
-
-    // return this.http.get(`${this.singleDBUrl}/${userId}.json`);
+    return this.http.get(`${this.singleDBUrl}/${userId}.json`);
   }
 
   // use for delete db data:-

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { SignUpResponse } from './../../appInterface/authInterface/sign-up-responce';
 import { config } from './../../appConfig/config';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +17,7 @@ export class AuthenticationService {
   user: any = new BehaviorSubject<any>(null);
 
   constructor(
+    private router: Router,
     private http: HttpClient,
     private _errorService: ErrorHandlingService
   ) { }
@@ -64,11 +66,34 @@ export class AuthenticationService {
       );
   }
 
+  autoSignIn() {
+    const userData = localStorage.getItem('userData');
+    const parseData = JSON.parse(userData as any);
+
+    if (!parseData) {
+      return;
+    }
+
+    const loggedInUser = new User(parseData.email, parseData.id, parseData._token, new Date(parseData._tokenExpirationDate
+    ));
+
+    const locationData = location.pathname.substring(1);
+
+    if (loggedInUser.token) {
+      this.user.next(loggedInUser);
+      console.log(locationData);
+      this.router.navigate([locationData === '' ? 'dashboard' : locationData]);
+    }
+
+  }
+
   // authentication:----
   private authenticationUser(email: string, userId: string, token: string, expireIn: any) {
     const expirationDate = new Date(new Date().getTime() + expireIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
+
+    localStorage.setItem("userData", JSON.stringify(user));
   }
 
 

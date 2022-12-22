@@ -1,3 +1,4 @@
+import { AuthenticationService } from './appService/authService/authentication.service';
 import { SmallService } from './appService/small.service';
 import { Component } from '@angular/core';
 
@@ -12,7 +13,8 @@ export class AppComponent {
   onActive: any;
 
   constructor(
-    private _smallService: SmallService
+    private _smallService: SmallService,
+    private _authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -21,6 +23,8 @@ export class AppComponent {
         this.onActive = res;
       }
     );
+
+    this._authService.autoSignIn();
   }
 
 
