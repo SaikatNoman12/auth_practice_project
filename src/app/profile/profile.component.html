@@ -96,10 +96,10 @@
             formControlName="photoUrl"
           />
           <small
-            *ngIf="!fromControl?.['photoUrl']?.valid && fromControl?.['photoUrl']?.touched"
+            *ngIf="!fromControl?.['photoUrl']?.valid && fromControl?.['photoUrl']?.touched && fromControl?.['photoUrl']?.errors?.['nomatch']"
             class="text-danger"
           >
-            Please enter your photo url!
+            Please enter your valid photo url! ( https:// )
           </small>
         </ng-container>
 

@@ -2,9 +2,24 @@ import { SmallService } from './../appService/small.service';
 import { HeaderComponent } from './../header/header.component';
 import { AuthenticationService } from './../appService/authService/authentication.service';
 import { SetUserProfile } from './../appInterface/add-employee';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+
+const checkUrl = () => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    const valueSlice = value.slice(0, 8);
+    if (value && valueSlice.length > 0 && valueSlice === 'https://') {
+      return null;
+    }
+    else {
+      return {
+        nomatch: true
+      };
+    }
+  };
+};
 
 @Component({
   selector: 'app-profile',
@@ -52,7 +67,7 @@ export class ProfileComponent implements OnInit {
     // use for form:-
     this.myRecForm = this.fBuilder.group({
       'name': ['', [Validators.required]],
-      'photoUrl': ['', [Validators.required]],
+      'photoUrl': ['', [Validators.required, checkUrl()]],
     });
 
 
