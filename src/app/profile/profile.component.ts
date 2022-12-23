@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   // use for queryParams:-
   editMode: boolean = false;
   onShowSpinner: boolean = false;
+  errorTextShow: any;
 
   // use for form:-
   myRecForm!: FormGroup;
@@ -90,15 +91,18 @@ export class ProfileComponent implements OnInit {
       };
 
       this.onShowSpinner = true;
+      this._smallService.spine.next(true);
 
       this._authService.updateProfile(myUserObj)
         .subscribe(
           (res: any) => {
             this._authService.getProfileData(this.userToken);
+            this._smallService.spine.next(false);
             this.onShowSpinner = false;
+            this.errorTextShow;
           },
           (err: any) => {
-            // console.log(err);
+            this.errorTextShow = err;
           }
         );
       this.router.navigate([], { queryParams: { Params: null } })

@@ -17,10 +17,20 @@
         <div class="profile ms-2">
           <div class="prof-img">
             <img
+              *ngIf="!onSpineShow"
               src="{{ profileInfo ? profileInfo : '../../assets/pngegg.png' }}"
               alt=""
-              style="object-fit: cover;"
+              style="object-fit: cover"
             />
+
+            <div
+              *ngIf="onSpineShow"
+              class="d-flex pt-2 justify-content-center"
+            >
+              <div class="spinner-border text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
           </div>
           <div class="profile-header-item">
             <ul>

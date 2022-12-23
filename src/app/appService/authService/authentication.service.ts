@@ -83,7 +83,6 @@ export class AuthenticationService {
 
     if (loggedInUser.token) {
       this.user.next(loggedInUser);
-      console.log(locationData);
       this.router.navigate([locationData === '' ? 'dashboard' : locationData]);
 
       // auto signOut:----

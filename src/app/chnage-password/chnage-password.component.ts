@@ -13,7 +13,6 @@ export class ChnagePasswordComponent implements OnInit {
 
   // use for form:-
   myRecForm !: FormGroup;
-
   token: any = JSON.parse(localStorage.getItem('userData') as any)._token;
 
   constructor(
@@ -51,7 +50,6 @@ export class ChnagePasswordComponent implements OnInit {
           this._authService.signOut();
         },
         (err: any) => {
-          console.log(err);
         }
       );
 

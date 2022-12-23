@@ -12,6 +12,8 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
   profileInfo: any;
 
+  onSpineShow: boolean = false;
+
   constructor(
     private _smallService: SmallService,
     private _authService: AuthenticationService
@@ -19,9 +21,8 @@ export class HeaderComponent implements OnInit {
     _authService.profileInfo.subscribe(
       (res: any) => {
         this.profileInfo = res.photoUrl;
-        console.log(this.profileInfo);
       }
-    )
+    );
   }
 
   myRecForm: any;
@@ -37,6 +38,12 @@ export class HeaderComponent implements OnInit {
     this._smallService.myRecForm.subscribe(
       (res: any) => {
         this.myRecForm = res;
+      }
+    );
+
+    this._smallService.spine.subscribe(
+      (res: any) => {
+        this.onSpineShow = res;
       }
     );
 

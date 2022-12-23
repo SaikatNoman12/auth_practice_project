@@ -1,6 +1,17 @@
 <br />
 <br />
 
+<ng-container *ngIf="errorTextShow">
+  <div class="container w-75 px-0 mb-4">
+    <div class="bg-danger bg-opacity-25 p-5 shadow rounded">
+      <h4 class="text-danger m-0">
+        <span class="">Error:</span>
+        <span class="h5 m-0 fw-lighter">{{ errorTextShow }}</span>
+      </h4>
+    </div>
+  </div>
+</ng-container>
+
 <div class="p-3 w-50 mx-auto shadow rounded">
   <div class="title-edit d-flex justify-content-between align-items-center">
     <div class="title">
@@ -39,12 +50,7 @@
 
   <hr />
 
-  <div
-    class="w-100"
-    *ngIf="
-      !onShowSpinner
-    "
-  >
+  <div class="w-100" *ngIf="!onShowSpinner">
     <form [formGroup]="myRecForm" (ngSubmit)="onRecFormSubmit()">
       <div class="form-item mb-3">
         <label class="h6 m-0" for="name">Edit Name:-</label>
@@ -108,7 +114,6 @@
           <br />
           <a
             class="h5 ps-3 text-primary text-break"
-
             *ngIf="profileInfo?.photoUrl"
             href="{{ profileInfo?.photoUrl }}"
             target="_blank"
@@ -154,11 +159,7 @@
     </form>
   </div>
 
-  <div
-    *ngIf="
-      onShowSpinner"
-    class="d-flex mt-3 justify-content-center"
-  >
+  <div *ngIf="onShowSpinner" class="d-flex mt-3 justify-content-center">
     <div class="spinner-grow text-warning" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
