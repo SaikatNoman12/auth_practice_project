@@ -180,6 +180,21 @@ export class AuthenticationService {
     );
   }
 
+  // use for reset password:----
+  forgetPassword(data: any) {
+    return this.http.post<any>(`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${config.API_KEY}`,
+      {
+        requestType: "PASSWORD_RESET",
+        email: data.email
+      })
+      .pipe(
+        catchError(
+          (err: any) => {
+            return this._errorService.handleError(err);
+          }
+        )
+      );
+  }
 
 
 

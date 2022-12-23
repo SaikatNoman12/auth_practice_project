@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../appService/authService/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,9 +11,11 @@ export class ForgetPasswordComponent implements OnInit {
 
   // use for form:-
   myRecForm !: FormGroup;
+  showSuccessMassage:boolean = false;
 
   constructor(
-    private fBuilder: FormBuilder
+    private fBuilder: FormBuilder,
+    private _authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +32,14 @@ export class ForgetPasswordComponent implements OnInit {
   // use for form:-
   onRecFormSubmit() {
     if (this.myRecForm.valid) {
-      console.log('forget password');
+      this._authService.forgetPassword(this.myRecForm.value).subscribe(
+        (res: any) => {
+          this.showSuccessMassage = true;
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
     }
     else {
       let key = Object.keys(this.formControl);
@@ -40,8 +50,7 @@ export class ForgetPasswordComponent implements OnInit {
             control.markAsTouched();
           }
         }
-      )
-
+      );
     }
   }
 

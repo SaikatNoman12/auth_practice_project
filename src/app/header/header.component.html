@@ -7,7 +7,7 @@
     <div class="signIn-profile d-flex align-items-center">
       <ng-container *ngIf="!isLoggedIn">
         <div class="sign-in-btn">
-          <button class="myBtn sign-in" type="button">
+          <button routerLink="/" class="myBtn sign-in" type="button">
             {{ "Sign In" | titlecase }}
           </button>
         </div>

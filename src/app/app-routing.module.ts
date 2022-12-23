@@ -26,7 +26,6 @@ const routes: Routes = [
   },
   {
     path: 'forget-password',
-    canActivate: [AuthGuard],
     loadChildren: () => import('./forget-password/forget-password.module').then(m => m.ForgetPasswordModule),
   }
 ];
